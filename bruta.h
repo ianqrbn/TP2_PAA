@@ -14,4 +14,8 @@ typedef struct
 
 } Sequencia;
 
+Pontuacao maior(Pontuacao a, Pontuacao b);
+
+Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao maiorPon);
+
 #endif

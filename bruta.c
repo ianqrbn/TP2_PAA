@@ -13,14 +13,21 @@ Pontuacao maior(Pontuacao a, Pontuacao b)
     return b;
 }
 
-Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao maiorPon)
+Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao maiorPon, Pontuacao *guardaMaiorPon)
 {
     if (indice >= sequencia->tamanho)
     {
         return 0;
     }
 
-    maiorPon = maior(maiorPontuacao(indice + 2, sequencia, maiorPon), maiorPontuacao(indice + 3, sequencia, maiorPon));
+    if (guardaMaiorPon[indice] != 0)
+    {
+        return guardaMaiorPon[indice];
+    }
 
-    return maiorPon + sequencia->elementosSeq[indice];
+    maiorPon = maior(maiorPontuacao(indice + 2, sequencia, maiorPon, guardaMaiorPon), maiorPontuacao(indice + 3, sequencia, maiorPon, guardaMaiorPon));
+
+    guardaMaiorPon[indice] = maiorPon + sequencia->elementosSeq[indice];
+
+    return guardaMaiorPon[indice];
 }

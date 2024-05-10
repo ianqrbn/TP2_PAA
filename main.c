@@ -83,16 +83,23 @@ Pontuacao maior(Pontuacao a, Pontuacao b)
     return b;
 }
 
-Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao maiorPon)
+Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao maiorPon, Pontuacao *guardaMaiorPon)
 {
     if (indice >= sequencia->tamanho)
     {
         return 0;
     }
 
-    maiorPon = maior(maiorPontuacao(indice + 2, sequencia, maiorPon), maiorPontuacao(indice + 3, sequencia, maiorPon));
+    if (guardaMaiorPon[indice] != 0)
+    {
+        return guardaMaiorPon[indice];
+    }
 
-    return maiorPon + sequencia->elementosSeq[indice];
+    maiorPon = maior(maiorPontuacao(indice + 2, sequencia, maiorPon, guardaMaiorPon), maiorPontuacao(indice + 3, sequencia, maiorPon, guardaMaiorPon));
+
+    guardaMaiorPon[indice] = maiorPon + sequencia->elementosSeq[indice];
+
+    return guardaMaiorPon[indice];
 }
 
 int main(int argc, char *argv[2])
@@ -122,6 +129,9 @@ int main(int argc, char *argv[2])
     }
 
     Sequencia *sequencia = preencheSequencia(input_file);
+
+    Pontuacao *guardaMaiorPon = calloc(sequencia->tamanho, sizeof(Pontuacao));
+
     for (int i = 0; i < sequencia->tamanho; i++)
     {
         printf("%d ", sequencia->elementosSeq[i]);
@@ -130,5 +140,5 @@ int main(int argc, char *argv[2])
 
     printf("%d\n", dinamica(sequencia));
 
-    printf("%d\n", maior(maiorPontuacao(0, sequencia, 0), maiorPontuacao(1, sequencia, 0)));
+    printf("%d\n", maior(maiorPontuacao(0, sequencia, 0, guardaMaiorPon), maiorPontuacao(1, sequencia, 0, guardaMaiorPon)));
 }
