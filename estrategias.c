@@ -70,32 +70,43 @@ Pontuacao tabulation(Sequencia *sequencia)
     return pontuacaoMaxima;
 }
 
-Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao pontuacaoMaxima, Pontuacao *pontuacoesMaximas)
+Pontuacao maiorPontuacao(int indice, Sequencia *sequencia, Pontuacao pontuacaoMaxima, Pontuacao **pontuacoesMaximas)
 {
     if (indice >= sequencia->tamanho)
     {
         return 0;
     }
 
-    if (pontuacoesMaximas[indice] != 0)
+    if (pontuacoesMaximas[1][indice] != 0)
     {
-        return pontuacoesMaximas[indice];
+        return pontuacoesMaximas[0][indice];
     }
 
     pontuacaoMaxima = maior(maiorPontuacao(indice + 2, sequencia, pontuacaoMaxima, pontuacoesMaximas), maiorPontuacao(indice + 3, sequencia, pontuacaoMaxima, pontuacoesMaximas));
 
-    pontuacoesMaximas[indice] = pontuacaoMaxima + sequencia->conteudo[indice];
+    pontuacoesMaximas[0][indice] = pontuacaoMaxima + sequencia->conteudo[indice];
 
-    return pontuacoesMaximas[indice];
+    pontuacoesMaximas[1][indice] = 1;
+
+    return pontuacoesMaximas[0][indice];
 }
 
 Pontuacao memoization(Sequencia *sequencia)
 {
-
-    Pontuacao *pontuacoesMaximas = calloc(sequencia->tamanho, sizeof(Pontuacao));
     Pontuacao pontuacaoMaxima;
 
+    Pontuacao **pontuacoesMaximas = calloc(2, sizeof(Pontuacao *));
+    for (int i = 0; i < 2; i++)
+    {
+        pontuacoesMaximas[i] = calloc(sequencia->tamanho, sizeof(Pontuacao));
+    }
+
     pontuacaoMaxima = maior(maiorPontuacao(0, sequencia, 0, pontuacoesMaximas), maiorPontuacao(1, sequencia, 0, pontuacoesMaximas));
+
+    for (int i = 0; i < 2; i++)
+    {
+        free(pontuacoesMaximas[i]);
+    }
 
     free(pontuacoesMaximas);
 
