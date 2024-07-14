@@ -26,6 +26,7 @@ int main(int argc, char *argv[2])
 
     printf("%d\n", memoization(sequencia));
 
+    fclose(input_file);
     destroiSequencia(sequencia);
     return 0;
 }
