@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NUM_TESTES=10  # Altere conforme necessário
-RESULTS_lfILE="resultados5.txt"
+RESULTS_lfILE="resultados8.txt"
 
 # Garantir que o locale use ponto como separador decimal
 export LC_NUMERIC="en_US.UTf-8"
