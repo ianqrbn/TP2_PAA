@@ -20,13 +20,13 @@ int main(int argc, char *argv[2])
 
     if (estrategia == "D")
     {
-        printf("%d\n", tabulation(sequencia));
+        printf("%d\n", tabulation(sequencia)); // printa resultado da Estrategia D
 
         destroiSequencia(sequencia);
         return 0;
     }
 
-    printf("%d\n", memoization(sequencia));
+    printf("%d\n", memoization(sequencia)); // printa resultado da Estrategia A
 
     fclose(input_file);
     destroiSequencia(sequencia);
